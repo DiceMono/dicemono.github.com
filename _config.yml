@@ -107,7 +107,7 @@ analytics:
 # Site Author
 author:
   name             : "DiceMono"
-  avatar           : # path of avatar image, e.g. "dicemono.github.com"
+  avatar           : "/assets/images/salmon.jpg"
   bio              : "I am an amazing person."
   location         : "Seoul, Korea"
   email            :
