@@ -5,15 +5,19 @@
   
 
   
-  <title>Hexo</title>
+  <title>Crawler-02-Selenium | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://DiceMono.github.io/index.html">
+  <meta name="description" content="12345678from selenium import webdriverdriver = webdriver.Chrome(&apos;./chromedriver&apos;)url = &quot;https://benq4ever.blog.me/221196878240&quot;driver.get(url)html = driver.page_sourceprint(html) 123456789101112131415">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crawler-02-Selenium">
+<meta property="og:url" content="http://DiceMono.github.io/2019/04/26/Crawler-02-Selenium/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="12345678from selenium import webdriverdriver = webdriver.Chrome(&apos;./chromedriver&apos;)url = &quot;https://benq4ever.blog.me/221196878240&quot;driver.get(url)html = driver.page_sourceprint(html) 123456789101112131415">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-04-26T09:05:27.524Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Crawler-02-Selenium">
+<meta name="twitter:description" content="12345678from selenium import webdriverdriver = webdriver.Chrome(&apos;./chromedriver&apos;)url = &quot;https://benq4ever.blog.me/221196878240&quot;driver.get(url)html = driver.page_sourceprint(html) 123456789101112131415">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -60,9 +64,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Crawler-02-Selenium" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Crawler-02-Selenium" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/26/Crawler-02-Selenium/" class="article-date">
   <time datetime="2019-04-26T08:45:06.000Z" itemprop="datePublished">2019-04-26</time>
@@ -79,8 +81,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/26/Crawler-02-Selenium/">Crawler-02-Selenium</a>
+    <h1 class="article-title" itemprop="name">
+      Crawler-02-Selenium
     </h1>
   
 
@@ -105,118 +107,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Crawler-01-requests" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/26/Crawler-01-requests/" class="article-date">
-  <time datetime="2019-04-26T07:30:53.000Z" itemprop="datePublished">2019-04-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ToyProject/">ToyProject</a>►<a class="article-category-link" href="/categories/ToyProject/BenqPCroomFinder/">BenqPCroomFinder</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/26/Crawler-01-requests/">네이버 블로그 크롤링하기 01/</a>
-    </h1>
+    <a href="/2019/04/26/Crawler-01-requests/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">네이버 블로그 크롤링하기 01/</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>이번 프로젝트의 목표는 네이버 블로그 포스트 본문을 긁어오는 게 목표이다<br>파이썬으로 크롤링을 하기 위해서는 두 가지 도구가 필요하다.</p>
-<ul>
-<li>requests</li>
-<li>BeatifulSoup</li>
-</ul>
-<p>requests는 말 그대로 요청이다. 브라우저가 서버에 요청하듯 파이썬을 이용해 해당 url의 정보를 get해온다.</p>
-<p>BeatifulSoup는 requests를 이용해 가져온 html 소스에서 원하는 정보를 탐색하기 용이하게 해준다.</p>
-<p>일단 requests를 이용해 위키백과의 파이썬 항목의 본문을 크롤링 해보자.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">"https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%B4%EC%8D%AC"</span></span><br><span class="line">req = requests.get(url)</span><br><span class="line">print(req.text) <span class="comment"># 페이지의 모든 텍스트 출력</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 위키백과 파이썬 페이지의 본문을 포함한 검색창, 회원가입 등등 모든 html 소스를 가져온다</span></span><br><span class="line"><span class="comment"># 우리가 필요한 정보는 본문이다. 본문의 경로는 div#bodyContent.mw-body-content이다.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(req.text, <span class="string">'html.parser'</span>)</span><br><span class="line">target = soup.select_one(<span class="string">'div#bodyContent.mw-body-content'</span>)</span><br><span class="line">print(target.text) <span class="comment"># 본문의 텍스트를 출력</span></span><br></pre></td></tr></table></figure>
-<p>문제는 네이버 블로그다. 네이버 블로그 포스트를 위와 같은 방법으로 크롤링 해보자.<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Pragma"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Expires"</span> <span class="attr">content</span>=<span class="string">"-1"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"robots"</span> <span class="attr">content</span>=<span class="string">"noindex,follow"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"referrer"</span> <span class="attr">content</span>=<span class="string">"always"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge,chrome=1"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"alternate"</span> <span class="attr">type</span>=<span class="string">"application/rss+xml"</span> <span class="attr">title</span>=<span class="string">"Because it matters, BenQ!"</span> <span class="attr">href</span>=<span class="string">"http://benq4ever.blog.me/rss"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"wlwmanifest"</span> <span class="attr">type</span>=<span class="string">"application/wlwmanifest+xml"</span> <span class="attr">href</span>=<span class="string">"http://benq4ever.blog.me/NBlogWlwLayout.nhn?blogId=benq4ever"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"shortcut icon"</span> <span class="attr">href</span>=<span class="string">"//blog.naver.com/favicon.ico"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Because it matters, BenQ! : 네이버 블로그<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"*,0"</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">frame</span> <span class="attr">id</span>=<span class="string">"screenFrame"</span> <span class="attr">name</span>=<span class="string">"screenFrame"</span> <span class="attr">src</span>=<span class="string">'https://blog.naver.com/benq4ever/221196878240?proxyReferer='</span> <span class="attr">scrolling</span>=<span class="string">"auto"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>블로그 이름만 보일 뿐 본문은 찾을 수 없다. 포스트의 본문은 소스 하단의 frame에 저장되어 있기 때문이다. requests로는 frame에 접근할 수 없다. 따라서 다른 도구를 사용해야 한다. 다음 포스트에서 selenium이라는 크롤링 도구를 활용해 frame에 접근해보자.</p>
-<p>궁금증:<br>왜 requests로는 frame에 접근할 수 없나.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://DiceMono.github.io/2019/04/26/Crawler-01-requests/" data-id="cjuxupax60000xkz7d39w4eiz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-Benq-start" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/04/25/Benq-start/" class="article-date">
-  <time datetime="2019-04-25T09:49:02.000Z" itemprop="datePublished">2019-04-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ToyProject/">ToyProject</a>►<a class="article-category-link" href="/categories/ToyProject/BenqPCroomFinder/">BenqPCroomFinder</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/04/25/Benq-start/">README</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="목적"><a href="#목적" class="headerlink" title="목적"></a>목적</h2><p>Html, css 구조 파악</p>
-<p>크롤링 연습</p>
-<p>데이터 베이스 연습(xslx, mySQL, csv)</p>
-<p>지도 api 활용(Naver, Kakao, google)</p>
-<h2 id="기능-명세"><a href="#기능-명세" class="headerlink" title="기능 명세"></a>기능 명세</h2><ol>
-<li>크롤링<ul>
-<li>Selenium으로 Benq 네이버 블로그의 PC방 리스트를 가져온다.</li>
-</ul>
-</li>
-<li>데이터 저장<ul>
-<li>PC방 리스트를 xlsx, mySQL, csv 등으로 저장한다.</li>
-</ul>
-</li>
-<li>지도 데이터로 변환</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://DiceMono.github.io/2019/04/25/Benq-start/" data-id="cjuxupay2000axkz7axydph22" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 </section>
         
