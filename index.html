@@ -62,6 +62,53 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-django-standalone" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/05/15/django-standalone/" class="article-date">
+  <time datetime="2019-05-15T06:54:48.000Z" itemprop="datePublished">2019-05-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ToyProject/">ToyProject</a>►<a class="article-category-link" href="/categories/ToyProject/BenqPCroomFinder/">BenqPCroomFinder</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/15/django-standalone/">django standalone</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 피시방 목록 크롤링</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_pcroom_table</span><span class="params">()</span>:</span></span><br><span class="line">    driver = webdriver.Chrome(<span class="string">'./chromedriver'</span>)</span><br><span class="line">    driver.implicitly_wait(<span class="number">30</span>)</span><br><span class="line">    url = <span class="string">"https://benq4ever.blog.me/221196878240"</span></span><br><span class="line">    driver.get(url)</span><br><span class="line">    driver.switch_to.frame(<span class="number">0</span>)</span><br><span class="line">    driver.switch_to.frame(<span class="string">"mainFrame"</span>)</span><br><span class="line">    html = driver.page_source</span><br><span class="line">    soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</span><br><span class="line">    pcroom_table = soup.select_one(<span class="string">'div#postViewArea div.view table:nth-of-type(2)'</span>)</span><br><span class="line">    <span class="keyword">return</span> pcroom_table</span><br></pre></td></tr></table></figure>
+<p>앞선 포스팅에서 네이버 블로그에 있는 벤큐 피시방 목록을 크롤링 하는데에는 성공했다. 이제 크롤링한 정보를 db에 pcroom모델 객체로 저장해야 된다. pcroom의 모델은 다음과 같다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCroom</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    createtime_datetime = models.DateTimeField(auto_now_add=<span class="literal">True</span>, blank=<span class="literal">True</span>)</span><br><span class="line">    name_char = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    monitor_char = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    address_char = models.CharField(max_length=<span class="number">40</span>)</span><br><span class="line">    url_char = models.CharField(max_length=<span class="number">30</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    longitude_float = models.FloatField(max_length= <span class="number">10</span>, null=<span class="literal">True</span>)</span><br><span class="line">    latitude_float = models.FloatField(max_length=<span class="number">10</span>, null=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
+<p>manage.py shell 에서 하듯이 django orm을 이용해 pcroom 모델을 임의로 생성해보았다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># script.py</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> PCroom</span><br><span class="line">pcroom = PCroom()</span><br><span class="line">pcroom.name_char = <span class="string">"7 피시방"</span></span><br><span class="line">pcroom.moniter_char = <span class="string">"benq 24인치"</span></span><br><span class="line">pcroom.address_char = <span class="string">"서울시 광진구 아차산로"</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">pcroom.save()</span><br></pre></td></tr></table></figure></p>
+<p>이제 script.py 를 실행하면 PCroom 객체가 하나 생성되고 db에 저장되야 하지만<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  File <span class="string">"/home/mino/PycharmProjects/Benq_PCroom_Finder/venv/lib/python3.7/site-packages/django/conf/__init__.py"</span>, line <span class="number">42</span>, <span class="keyword">in</span> _setup</span><br><span class="line">    % (desc, ENVIRONMENT_VARIABLE))</span><br><span class="line">django.core.exceptions.ImproperlyConfigured: Requested setting INSTALLED_APPS, but settings are <span class="keyword">not</span> configured. You must either define the environment variable DJANGO_SETTINGS_MODULE <span class="keyword">or</span> call settings.configure() before accessing settings.</span><br></pre></td></tr></table></figure></p>
+<p>대강 이런 에러가 뜬다. script.py에 장고 환경 변수가 설정이 안되있다는 뜻이다. 이를 해결하기 위해 django standalone이 있다. django standalone은 일반 파이썬 스크립트에서도 ORM 같은 장고 기능을 사용할 수 있게해준다. django standalone을 사용하기 위해서는 파일 상단에 다음 4줄만 추가해 주면 된다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># script.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line">os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'config.settings'</span>) <span class="comment"># 프로젝트 폴더에 있는 wsgi.py에서 가져온다.</span></span><br><span class="line">django.setup() <span class="comment"># 장고 셋팅값을 불러온다.</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> PCroom</span><br><span class="line">pcroom = PCroom()</span><br><span class="line">pcroom.name_char = <span class="string">"7 피시방"</span></span><br><span class="line">pcroom.moniter_char = <span class="string">"benq 24인치"</span></span><br><span class="line">pcroom.address_char = <span class="string">"서울시 광진구 아차산로"</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">pcroom.save() <span class="comment"># 성공!</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_location</span><span class="params">(address)</span>:</span> <span class="comment"># 네이버 api를 이용해 도로명 주소를 위도 경도로 변환</span></span><br><span class="line">    url = <span class="string">"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="</span>+address+<span class="string">"&amp;coordinate=11,10"</span></span><br><span class="line">    custom_headers = &#123;</span><br><span class="line">        <span class="string">"X-NCP-APIGW-API-KEY-ID"</span> : <span class="string">'YOUR_KEY_ID'</span>,</span><br><span class="line">        <span class="string">"X-NCP-APIGW-API-KEY"</span> : <span class="string">"YOUR_KEY"</span></span><br><span class="line">    &#125;</span><br><span class="line">    req=requests.get(url, headers=custom_headers)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> (req.json()[<span class="string">"addresses"</span>][<span class="number">0</span>][<span class="string">"x"</span>], req.json()[<span class="string">"addresses"</span>][<span class="number">0</span>][<span class="string">"y"</span>])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(address, <span class="string">"좌표화 불가."</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_pcroom_table</span><span class="params">()</span>:</span></span><br><span class="line">    pcroom_table = get_pcroom_table() <span class="comment"># PC방 목록 불러옴</span></span><br><span class="line">    rows = pcroom_table.select(<span class="string">'tr'</span>)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> rows[<span class="number">1</span>:]:</span><br><span class="line">        pcroom = PCroom()</span><br><span class="line">        cells = row.select(<span class="string">'td'</span>)</span><br><span class="line">        pcroom.name_char = cells[<span class="number">1</span>].text</span><br><span class="line">        pcroom.monitor_char = cells[<span class="number">2</span>].text</span><br><span class="line">        pcroom.address_char = cells[<span class="number">3</span>].text</span><br><span class="line">        pcroom.url_char = cells[<span class="number">4</span>].text</span><br><span class="line">        location_point = to_location(pcroom.address_char)</span><br><span class="line">        <span class="keyword">if</span> location_point:</span><br><span class="line">            pcroom.longitude_float = location_point[<span class="number">0</span>]</span><br><span class="line">            pcroom.latitude_float = location_point[<span class="number">1</span>]</span><br><span class="line">        pcroom.save() <span class="comment"># PC방 객체 저장</span></span><br></pre></td></tr></table></figure>
+<p>django standalone을 몰랐을 때는 sqlite db에 직접 접근해서 쿼리문으로 PCroom객체들을 저장했다. 잘 작동했지만 문제가 있었다. 배포할 때는 postgres같은 다른 db를 사용해야 하는데 sqlite 쿼리문으로는 데이터를 저장할 수 없는 것이다. django standalone은 외부 파일에서 ORM말고 다른 장고 기능을 사용할 때에도 요긴하게 쓸 수 있을것 같다. </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://DiceMono.github.io/2019/05/15/django-standalone/" data-id="cjxo2qbaq0004xmz79w6r3bf7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Crawler-02-Selenium" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/04/26/Crawler-02-Selenium/" class="article-date">
@@ -105,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://DiceMono.github.io/2019/04/26/Crawler-02-Selenium/" data-id="cjxnfxc240004n4z7auvcbc76" class="article-share-link">Share</a>
+      <a data-url="http://DiceMono.github.io/2019/04/26/Crawler-02-Selenium/" data-id="cjxo2qbap0003xmz7vekmyz74" class="article-share-link">Share</a>
       
       
     </footer>
@@ -156,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://DiceMono.github.io/2019/04/26/Crawler-01-requests/" data-id="cjxnfxc1x0001n4z79xlxvob4" class="article-share-link">Share</a>
+      <a data-url="http://DiceMono.github.io/2019/04/26/Crawler-01-requests/" data-id="cjxo2qbal0001xmz7hfopqxej" class="article-share-link">Share</a>
       
       
     </footer>
@@ -211,7 +258,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://DiceMono.github.io/2019/04/25/Benq-start/" data-id="cjxnfxc210002n4z7yr3f6maa" class="article-share-link">Share</a>
+      <a data-url="http://DiceMono.github.io/2019/04/25/Benq-start/" data-id="cjxo2qbag0000xmz7d5ui4cli" class="article-share-link">Share</a>
       
       
     </footer>
@@ -246,7 +293,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a></li></ul>
     </div>
   </div>
 
@@ -257,6 +304,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/05/15/django-standalone/">django standalone</a>
+          </li>
         
           <li>
             <a href="/2019/04/26/Crawler-02-Selenium/">Crawler-02-Selenium</a>
