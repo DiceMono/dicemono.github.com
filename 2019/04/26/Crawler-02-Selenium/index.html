@@ -1,144 +1,75 @@
-<!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Crawler-02-Selenium | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="John Doe">
-  <meta name="keywords" content>
-  <meta name="description" content>
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/css/main.css"> <link rel="stylesheet" href="/css/style.css"> <link rel="stylesheet" href="/css/menu.css"> 
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/jquery.jside.menu.js"></script>
-	<script>
-	$(document).ready(function(){
-	$(".menu-container").jSideMenu({
-	    jSidePosition: "position-right",
-	    jSideSticky: true,
-	    jSideSkin: "moonlit",
-	     });
-	}); 
-	</script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-</head>
-<body>
-<div class="single">
-<div id="page">
-<div id="lx-aside" style="background-image: url(/images/page-cover.jpg)" data-stellar-background-ratio="0.5">
-  <div class="overlay">
-  <div class="page-title">
-    <div class="avatar"><img src="/images/person_1.jpg"></div>
-    <span>2019-04-26</span>
-    <h2>Crawler-02-Selenium</h2>
-    </div>
-</div>
-</div>
-<div id="lx-main-content">
-  <div class="lx-post">
-    <div class="lx-entry padding">
-      <div>
-        <p>타겟 : <a href="https://benq4ever.blog.me/221196878240" target="_blank" rel="noopener">https://benq4ever.blog.me/221196878240</a><br>셀레니움으로 네이버 블로그 크롤링 하기</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
-<p><a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">https://sites.google.com/a/chromium.org/chromedriver/downloads</a><br>셀레니움을 사용하기 위해선 먼저 드라이버를 설치해야한다. 위 링크에서 다운로드 받은 파일을 프로젝트 폴더에 넣어주자.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line">driver = webdriver.Chrome(<span class="string">'./chromedriver'</span>)</span><br><span class="line">url = <span class="string">"https://benq4ever.blog.me/221196878240"</span></span><br><span class="line"></span><br><span class="line">driver.get(url)</span><br><span class="line"></span><br><span class="line">html = driver.page_source</span><br><span class="line">print(html)</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Pragma"</span> <span class="attr">content</span>=<span class="string">"no-cache"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Expires"</span> <span class="attr">content</span>=<span class="string">"-1"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"robots"</span> <span class="attr">content</span>=<span class="string">"noindex,follow"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"referrer"</span> <span class="attr">content</span>=<span class="string">"always"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=utf-8"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge,chrome=1"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"alternate"</span> <span class="attr">type</span>=<span class="string">"application/rss+xml"</span> <span class="attr">title</span>=<span class="string">"Because it matters, BenQ!"</span> <span class="attr">href</span>=<span class="string">"http://benq4ever.blog.me/rss"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"wlwmanifest"</span> <span class="attr">type</span>=<span class="string">"application/wlwmanifest+xml"</span> <span class="attr">href</span>=<span class="string">"http://benq4ever.blog.me/NBlogWlwLayout.nhn?blogId=benq4ever"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"shortcut icon"</span> <span class="attr">href</span>=<span class="string">"//blog.naver.com/favicon.ico"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>Because it matters, BenQ! : 네이버 블로그<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">frameset</span> <span class="attr">rows</span>=<span class="string">"*,0"</span> <span class="attr">frameborder</span>=<span class="string">"0"</span> <span class="attr">framespacing</span>=<span class="string">"0"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">frame</span> <span class="attr">id</span>=<span class="string">"screenFrame"</span> <span class="attr">name</span>=<span class="string">"screenFrame"</span> <span class="attr">src</span>=<span class="string">'https://blog.naver.com/benq4ever/221196878240?proxyReferer='</span> <span class="attr">scrolling</span>=<span class="string">"auto"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">frameset</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<!DOCTYPE html><html lang="en-us"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>Crawler-02-Selenium | Hexo</title><meta name="description"><meta name="generator" content="Hexo"><meta name="author" content="DiceMono"><meta name="keywords"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"><link rel="stylesheet" type="text/css" href="/styles/screen.css"><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="128x128" href="/images/favicon-128.png"><link rel="icon" type="image/png" sizes="196x196" href="/images/favicon-196x196.png"><meta name="msapplication-TileColor" content="#FFFFFF"><meta name="msapplication-TileImage" content="mstile-144x144.png"><meta name="msapplication-square70x70logo" content="mstile-70x70.png"><meta name="msapplication-square150x150logo" content="mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="mstile-310x150.png"><meta name="msapplication-square310x310logo" content="mstile-310x310.png"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body itemscope itemtype="https://schema.org/WebPage"><header itemscope itemtype="https://schema.org/WPHeader"><div class="logo"></div><h1><a href="/" alt="Hexo" title="Hexo" itemprop="headline">Hexo</a></h1><p itemprop="description"></p><nav itemscope itemtype="https://schema.org/SiteNavigationElement"><ul><li itemprop="name"><a href="/ " alt="home" title="home" itemprop="url">home</a></li><li itemprop="name"><a href="/articles" alt="articles" title="articles" itemprop="url">articles</a></li><li itemprop="name"><a href="/author" alt="author" title="author" itemprop="url">author</a></li></ul></nav><div class="space"></div></header><main itemscope itemtype="https://schema.org/Blog"><article class="full"><h1 itemprop="headline" class="post-heading">Crawler-02-Selenium</h1><span class="post-meta"></span><br><br><p>타겟 : <a href="https://benq4ever.blog.me/221196878240" target="_blank" rel="noopener">https://benq4ever.blog.me/221196878240</a><br>셀레니움으로 네이버 블로그 크롤링 하기</p>
+<pre><code>pip install selenium
+</code></pre><p><a href="https://sites.google.com/a/chromium.org/chromedriver/downloads" target="_blank" rel="noopener">https://sites.google.com/a/chromium.org/chromedriver/downloads</a><br>셀레니움을 사용하기 위해선 먼저 드라이버를 설치해야한다. 위 링크에서 다운로드 받은 파일을 프로젝트 폴더에 넣어주자.</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+driver <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>Chrome<span class="token punctuation">(</span><span class="token string">'./chromedriver'</span><span class="token punctuation">)</span>
+url <span class="token operator">=</span> <span class="token string">"https://benq4ever.blog.me/221196878240"</span>
+
+driver<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+
+html <span class="token operator">=</span> driver<span class="token punctuation">.</span>page_source
+<span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+</code></pre>
+<pre class=" language-html"><code class="language-html"><span class="token doctype">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Pragma<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>no-cache<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Expires<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>robots<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>noindex,follow<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>referrer<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>always<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset<span class="token punctuation">=</span>utf-8<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>X-UA-Compatible<span class="token punctuation">"</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>IE<span class="token punctuation">=</span>edge,chrome<span class="token punctuation">=</span>1<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>alternate<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>application/rss+xml<span class="token punctuation">"</span></span> <span class="token attr-name">title</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Because it matters, BenQ!<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://benq4ever.blog.me/rss<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>wlwmanifest<span class="token punctuation">"</span></span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>application/wlwmanifest+xml<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://benq4ever.blog.me/NBlogWlwLayout.nhn?blogId<span class="token punctuation">=</span>benq4ever<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>shortcut icon<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>//blog.naver.com/favicon.ico<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Because it matters, BenQ! : 네이버 블로그<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>frameset</span> <span class="token attr-name">rows</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>*,0<span class="token punctuation">"</span></span> <span class="token attr-name">frameborder</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">framespacing</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>frame</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>screenFrame<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>screenFrame<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">'</span>https://blog.naver.com/benq4ever/221196878240?proxyReferer<span class="token punctuation">=</span><span class="token punctuation">'</span></span> <span class="token attr-name">scrolling</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>frameset</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
 <p>먼저 셀레니움으로 타겟의 html 소스를 가져와봤다. 포스트의 본문은 아래 frame에 숨겨져있다. frame에 접근하기위해 switch_to.frame() 메서드를 사용한다. 함수 인자는 frame의 id, 또는 frame의 위치도 가능하다.(이 경우 0)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line">driver = webdriver.Chrome(<span class="string">'./chromedriver'</span>)</span><br><span class="line">url = <span class="string">"https://benq4ever.blog.me/221196878240"</span></span><br><span class="line"></span><br><span class="line">driver.get(url)</span><br><span class="line"></span><br><span class="line">driver.switch_to.frame(<span class="string">"screenFrame"</span>) <span class="comment"># driver.switch_to.frame(0)도 가능</span></span><br><span class="line"></span><br><span class="line">html = driver.page_source</span><br><span class="line">print(html)</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 너무 길어서 생략 --&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">id</span>=<span class="string">"mainFrame"</span> <span class="attr">name</span>=<span class="string">"mainFrame"</span> <span class="attr">allowfullscreen</span>=<span class="string">"true"</span> <span class="attr">src</span>=<span class="string">"/PostView.nhn?blogId=benq4ever&amp;amp;logNo=221196878240&amp;amp;redirect=Dlog&amp;amp;widgetTypeCall=true&amp;amp;directAccess=false"</span> <span class="attr">scrolling</span>=<span class="string">"auto"</span> <span class="attr">onload</span>=<span class="string">"oFramesetTitleController.start(self.frames['mainFrame'], self, sTitle);oFramesetTitleController.onLoadFrame();oFramesetUrlController.start(self.frames['mainFrame']);oFramesetUrlController.onLoadFrame()"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">iframe</span> <span class="attr">id</span>=<span class="string">"hiddenFrame"</span> <span class="attr">name</span>=<span class="string">"hiddenFrame"</span> <span class="attr">src</span>=<span class="string">"/NBlogHidden.nhn?blogId=benq4ever&amp;amp;musicYN=false"</span> <span class="attr">scrolling</span>=<span class="string">"no"</span> <span class="attr">noresize</span>=<span class="string">"noresize"</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+driver <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>Chrome<span class="token punctuation">(</span><span class="token string">'./chromedriver'</span><span class="token punctuation">)</span>
+url <span class="token operator">=</span> <span class="token string">"https://benq4ever.blog.me/221196878240"</span>
+
+driver<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+
+driver<span class="token punctuation">.</span>switch_to<span class="token punctuation">.</span>frame<span class="token punctuation">(</span><span class="token string">"screenFrame"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># driver.switch_to.frame(0)도 가능</span>
+
+html <span class="token operator">=</span> driver<span class="token punctuation">.</span>page_source
+<span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+</code></pre>
+<pre class=" language-html"><code class="language-html"><span class="token comment" spellcheck="true">&lt;!-- 너무 길어서 생략 --></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>iframe</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mainFrame<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>mainFrame<span class="token punctuation">"</span></span> <span class="token attr-name">allowfullscreen</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/PostView.nhn?blogId<span class="token punctuation">=</span>benq4ever&amp;amp;logNo<span class="token punctuation">=</span>221196878240&amp;amp;redirect<span class="token punctuation">=</span>Dlog&amp;amp;widgetTypeCall<span class="token punctuation">=</span>true&amp;amp;directAccess<span class="token punctuation">=</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">scrolling</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>auto<span class="token punctuation">"</span></span> <span class="token attr-name">onload</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>oFramesetTitleController.start(self.frames[<span class="token punctuation">'</span>mainFrame<span class="token punctuation">'</span>], self, sTitle);oFramesetTitleController.onLoadFrame();oFramesetUrlController.start(self.frames[<span class="token punctuation">'</span>mainFrame<span class="token punctuation">'</span>]);oFramesetUrlController.onLoadFrame()<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>iframe</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>iframe</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hiddenFrame<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>hiddenFrame<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>/NBlogHidden.nhn?blogId<span class="token punctuation">=</span>benq4ever&amp;amp;musicYN<span class="token punctuation">=</span>false<span class="token punctuation">"</span></span> <span class="token attr-name">scrolling</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>no<span class="token punctuation">"</span></span> <span class="token attr-name">noresize</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>noresize<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>iframe</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
 <p>새로운 html소스로 보아 frame 접근에 성공했음을 알 수 있다. 다만, 이번에도 포스트의 본문은 보이지 않고 iframe이라는 새로운 tag가 두개나 등장했다. mainFrame과 hiddenFrame. 본문이 들어있을 법한 이름을 가진 mainframe에 접근해보자. screenFrame 접근 방식과 동일하다.</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line">driver = webdriver.Chrome(<span class="string">'./chromedriver'</span>)</span><br><span class="line">url = <span class="string">"https://benq4ever.blog.me/221196878240"</span></span><br><span class="line"></span><br><span class="line">driver.get(url)</span><br><span class="line"></span><br><span class="line">driver.switch_to.frame(<span class="string">"screenFrame"</span>) <span class="comment"># driver.switch_to.frame(0)도 가능</span></span><br><span class="line">driver.switch_to.frame(<span class="string">"mainFrame"</span>) <span class="comment"># driver.switch_to.frame(0)도 가능</span></span><br><span class="line"></span><br><span class="line">html = driver.page_source</span><br><span class="line">print(html)</span><br></pre></td></tr></table></figure>
-<p>html 소스를 출력해보면 본문이 포함되 있음을 알 수 있고, 이제 필요한 정보를 골라내기 위해 BeatifulSoup를 사용해야한다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</span><br><span class="line">PCroom_table = soup.select_one(<span class="string">'div#postViewArea div.view table:nth-of-type(2)'</span>)</span><br><span class="line">print(PCroom_table)</span><br></pre></td></tr></table></figure></p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> selenium <span class="token keyword">import</span> webdriver
+driver <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>Chrome<span class="token punctuation">(</span><span class="token string">'./chromedriver'</span><span class="token punctuation">)</span>
+url <span class="token operator">=</span> <span class="token string">"https://benq4ever.blog.me/221196878240"</span>
+
+driver<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+
+driver<span class="token punctuation">.</span>switch_to<span class="token punctuation">.</span>frame<span class="token punctuation">(</span><span class="token string">"screenFrame"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># driver.switch_to.frame(0)도 가능</span>
+driver<span class="token punctuation">.</span>switch_to<span class="token punctuation">.</span>frame<span class="token punctuation">(</span><span class="token string">"mainFrame"</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># driver.switch_to.frame(0)도 가능</span>
+
+html <span class="token operator">=</span> driver<span class="token punctuation">.</span>page_source
+<span class="token keyword">print</span><span class="token punctuation">(</span>html<span class="token punctuation">)</span>
+</code></pre>
+<p>html 소스를 출력해보면 본문이 포함되 있음을 알 수 있고, 이제 필요한 정보를 골라내기 위해 BeatifulSoup를 사용해야한다.</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>html<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+PCroom_table <span class="token operator">=</span> soup<span class="token punctuation">.</span>select_one<span class="token punctuation">(</span><span class="token string">'div#postViewArea div.view table:nth-of-type(2)'</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>PCroom_table<span class="token punctuation">)</span>
+</code></pre>
 <p>‘div#postViewArea div.view table:nth-of-type(2)’는 css selector의 문법이다. 나는 블로그 포스트의 표를 가져오기 위해 이렇게 작성했지만, 포스트의 다른 부분을 가져와야 한다면 수정해야한다.</p>
 <p>찾아보니 frame과 frameset은 html5에서 더이상 지원하지 않는 퇴화 태그라고 한다. 왜 네이버 블로그는 이런 퇴화 태그를 써가면서 복잡하게 설계한걸까? 구글같은 경쟁 사이트에 노출이 어렵게 하기 위함이라는 의견도 보았으나 잘 모르겠다. 어쨌거나 네이버 블로그는 frame을 하나씩 열어가며 크롤링 해야한다는 것을 알 수 있었다. 다음 포스트에서는 크롤링한 정보를 django 모델로 저장하여 데이터베이스에 반영해 보겠다.</p>
-
-      </div>
-    </div>
-  </div>
-</div>
-<div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer_1.jpg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2019/05/15/django-standalone/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Next</span>
-						<h3>django standalone</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer_2.jpg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2019/04/26/Crawler-01-requests/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Prev</span>
-						<h3>네이버 블로그 크롤링하기 01/</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-</div>
-</div>
-
-<footer>
-  <div>
-  Copyright &copy; 2019.<a href="/">Hexo</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.blleng.cn" target="_blank">Lx</a><br>
-  </div>
-</footer>
-</div>
-<button class="menu-trigger"></button>
-  <div class="menu">
-	<div class="menu-head">
-	   <span class="layer">
-	<div class="col">
-	  <div class="row for-pic">
-	   <div class="profile-pic">     
-	   <img src="/images/person_1.jpg" alt="John Doe"> 
-	         </div>
-	  </div>
-	         <div class="row for-name">
-	         <p>John Doe</p>
-	        <span class="tagline">Hello, World!</span>
-	          </div>
-	         </div> 
-	  </span>
-	</div>
-	<nav class="menu-container">
-	<ul class="menu-items">
-	<li><span class="item-icon"><i class="fa fa-home"></i></span> <a href="/">首页</a></li>
-  <li><span class="item-icon"><i class="fa fa-archive"></i></span> <a href="/archives/">归档</a></li> 
-	<li class="has-sub"> <span class="item-icon"> <i class="fa fa-bookmark"></i> </span>
-	<span class="dropdown-heading">页面</span><ul>
-   <li> <a href="/guestbook">留言</a></li><li> <a href="/about">关于</a></li>
-	  </ul>
-	 </li>
-    <li class="has-sub"> <span class="item-icon"> <i class="fa fa-link"></i> </span>
-	 <span class="dropdown-heading">友链</span><ul>
-   <li> <a href="https://lx.blleng.cn" target="_blank">Theme-Lx</a></li>
-	  </ul>
-	 </li>
-	</ul>
-	</nav>
-  </div>
-<div class="gototop js-top">
-  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
-</div>
-
-
-<script src="/js/jquery.easing.min.js"></script>
-<script src="/js/jquery.waypoints.min.js"></script>
-<script src="/js/jquery.stellar.min.js"></script>
-<script src="/js/main.js"></script>
-
-
-</body>
-</html>
+</article><br><br><span class="next-post"><a href="/2019/04/26/Crawler-01-requests/" itemprop="url">Older Post ⇒</a></span><span class="prev-post"><a href="/2019/05/15/django-standalone/" itemprop="url">⇐ Next Post </a></span><br><br><br></main></body></html>

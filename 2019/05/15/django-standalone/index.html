@@ -1,138 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>django standalone | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="John Doe">
-  <meta name="keywords" content>
-  <meta name="description" content>
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="stylesheet" href="/css/main.css"> <link rel="stylesheet" href="/css/style.css"> <link rel="stylesheet" href="/css/menu.css"> 
-  <script src="/js/jquery.min.js"></script>
-  <script src="/js/jquery.jside.menu.js"></script>
-	<script>
-	$(document).ready(function(){
-	$(".menu-container").jSideMenu({
-	    jSidePosition: "position-right",
-	    jSideSticky: true,
-	    jSideSkin: "moonlit",
-	     });
-	}); 
-	</script>
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-</head>
-<body>
-<div class="single">
-<div id="page">
-<div id="lx-aside" style="background-image: url(/images/page-cover.jpg)" data-stellar-background-ratio="0.5">
-  <div class="overlay">
-  <div class="page-title">
-    <div class="avatar"><img src="/images/person_1.jpg"></div>
-    <span>2019-05-15</span>
-    <h2>django standalone</h2>
-    </div>
-</div>
-</div>
-<div id="lx-main-content">
-  <div class="lx-post">
-    <div class="lx-entry padding">
-      <div>
-        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 피시방 목록 크롤링</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_pcroom_table</span><span class="params">()</span>:</span></span><br><span class="line">    driver = webdriver.Chrome(<span class="string">'./chromedriver'</span>)</span><br><span class="line">    driver.implicitly_wait(<span class="number">30</span>)</span><br><span class="line">    url = <span class="string">"https://benq4ever.blog.me/221196878240"</span></span><br><span class="line">    driver.get(url)</span><br><span class="line">    driver.switch_to.frame(<span class="number">0</span>)</span><br><span class="line">    driver.switch_to.frame(<span class="string">"mainFrame"</span>)</span><br><span class="line">    html = driver.page_source</span><br><span class="line">    soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</span><br><span class="line">    pcroom_table = soup.select_one(<span class="string">'div#postViewArea div.view table:nth-of-type(2)'</span>)</span><br><span class="line">    <span class="keyword">return</span> pcroom_table</span><br></pre></td></tr></table></figure>
-<p>앞선 포스팅에서 네이버 블로그에 있는 벤큐 피시방 목록을 크롤링 하는데에는 성공했다. 이제 크롤링한 정보를 db에 pcroom모델 객체로 저장해야 된다. pcroom의 모델은 다음과 같다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCroom</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    createtime_datetime = models.DateTimeField(auto_now_add=<span class="literal">True</span>, blank=<span class="literal">True</span>)</span><br><span class="line">    name_char = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    monitor_char = models.CharField(max_length=<span class="number">20</span>)</span><br><span class="line">    address_char = models.CharField(max_length=<span class="number">40</span>)</span><br><span class="line">    url_char = models.CharField(max_length=<span class="number">30</span>, blank=<span class="literal">True</span>, null=<span class="literal">True</span>)</span><br><span class="line">    longitude_float = models.FloatField(max_length= <span class="number">10</span>, null=<span class="literal">True</span>)</span><br><span class="line">    latitude_float = models.FloatField(max_length=<span class="number">10</span>, null=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
-<p>manage.py shell 에서 하듯이 django orm을 이용해 pcroom 모델을 임의로 생성해보았다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># script.py</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> PCroom</span><br><span class="line">pcroom = PCroom()</span><br><span class="line">pcroom.name_char = <span class="string">"7 피시방"</span></span><br><span class="line">pcroom.moniter_char = <span class="string">"benq 24인치"</span></span><br><span class="line">pcroom.address_char = <span class="string">"서울시 광진구 아차산로"</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">pcroom.save()</span><br></pre></td></tr></table></figure></p>
-<p>이제 script.py 를 실행하면 PCroom 객체가 하나 생성되고 db에 저장되야 하지만<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  File <span class="string">"/home/mino/PycharmProjects/Benq_PCroom_Finder/venv/lib/python3.7/site-packages/django/conf/__init__.py"</span>, line <span class="number">42</span>, <span class="keyword">in</span> _setup</span><br><span class="line">    % (desc, ENVIRONMENT_VARIABLE))</span><br><span class="line">django.core.exceptions.ImproperlyConfigured: Requested setting INSTALLED_APPS, but settings are <span class="keyword">not</span> configured. You must either define the environment variable DJANGO_SETTINGS_MODULE <span class="keyword">or</span> call settings.configure() before accessing settings.</span><br></pre></td></tr></table></figure></p>
-<p>대강 이런 에러가 뜬다. script.py에 장고 환경 변수가 설정이 안되있다는 뜻이다. 이를 해결하기 위해 django standalone이 있다. django standalone은 일반 파이썬 스크립트에서도 ORM 같은 장고 기능을 사용할 수 있게해준다. django standalone을 사용하기 위해서는 파일 상단에 다음 4줄만 추가해 주면 된다.<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># script.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> django</span><br><span class="line">os.environ.setdefault(<span class="string">'DJANGO_SETTINGS_MODULE'</span>, <span class="string">'config.settings'</span>) <span class="comment"># 프로젝트 폴더에 있는 wsgi.py에서 가져온다.</span></span><br><span class="line">django.setup() <span class="comment"># 장고 셋팅값을 불러온다.</span></span><br><span class="line"><span class="keyword">from</span> myapp.models <span class="keyword">import</span> PCroom</span><br><span class="line">pcroom = PCroom()</span><br><span class="line">pcroom.name_char = <span class="string">"7 피시방"</span></span><br><span class="line">pcroom.moniter_char = <span class="string">"benq 24인치"</span></span><br><span class="line">pcroom.address_char = <span class="string">"서울시 광진구 아차산로"</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line">pcroom.save() <span class="comment"># 성공!</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">to_location</span><span class="params">(address)</span>:</span> <span class="comment"># 네이버 api를 이용해 도로명 주소를 위도 경도로 변환</span></span><br><span class="line">    url = <span class="string">"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="</span>+address+<span class="string">"&amp;coordinate=11,10"</span></span><br><span class="line">    custom_headers = &#123;</span><br><span class="line">        <span class="string">"X-NCP-APIGW-API-KEY-ID"</span> : <span class="string">'YOUR_KEY_ID'</span>,</span><br><span class="line">        <span class="string">"X-NCP-APIGW-API-KEY"</span> : <span class="string">"YOUR_KEY"</span></span><br><span class="line">    &#125;</span><br><span class="line">    req=requests.get(url, headers=custom_headers)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> (req.json()[<span class="string">"addresses"</span>][<span class="number">0</span>][<span class="string">"x"</span>], req.json()[<span class="string">"addresses"</span>][<span class="number">0</span>][<span class="string">"y"</span>])</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(address, <span class="string">"좌표화 불가."</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_pcroom_table</span><span class="params">()</span>:</span></span><br><span class="line">    pcroom_table = get_pcroom_table() <span class="comment"># PC방 목록 불러옴</span></span><br><span class="line">    rows = pcroom_table.select(<span class="string">'tr'</span>)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> rows[<span class="number">1</span>:]:</span><br><span class="line">        pcroom = PCroom()</span><br><span class="line">        cells = row.select(<span class="string">'td'</span>)</span><br><span class="line">        pcroom.name_char = cells[<span class="number">1</span>].text</span><br><span class="line">        pcroom.monitor_char = cells[<span class="number">2</span>].text</span><br><span class="line">        pcroom.address_char = cells[<span class="number">3</span>].text</span><br><span class="line">        pcroom.url_char = cells[<span class="number">4</span>].text</span><br><span class="line">        location_point = to_location(pcroom.address_char)</span><br><span class="line">        <span class="keyword">if</span> location_point:</span><br><span class="line">            pcroom.longitude_float = location_point[<span class="number">0</span>]</span><br><span class="line">            pcroom.latitude_float = location_point[<span class="number">1</span>]</span><br><span class="line">        pcroom.save() <span class="comment"># PC방 객체 저장</span></span><br></pre></td></tr></table></figure>
+<!DOCTYPE html><html lang="en-us"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><title>django standalone | Hexo</title><meta name="description"><meta name="generator" content="Hexo"><meta name="author" content="DiceMono"><meta name="keywords"><meta name="HandheldFriendly" content="True"><meta name="MobileOptimized" content="320"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"><link rel="stylesheet" type="text/css" href="/styles/screen.css"><link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png"><link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png"><link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png"><link rel="apple-touch-icon" sizes="76x76" href="/images/apple-touch-icon-76x76.png"><link rel="apple-touch-icon" sizes="114x114" href="/images/apple-touch-icon-114x114.png"><link rel="apple-touch-icon" sizes="120x120" href="/images/apple-touch-icon-120x120.png"><link rel="apple-touch-icon" sizes="144x144" href="/images/apple-touch-icon-144x144.png"><link rel="apple-touch-icon" sizes="152x152" href="/images/apple-touch-icon-152x152.png"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-180x180.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png"><link rel="icon" type="image/png" sizes="128x128" href="/images/favicon-128.png"><link rel="icon" type="image/png" sizes="196x196" href="/images/favicon-196x196.png"><meta name="msapplication-TileColor" content="#FFFFFF"><meta name="msapplication-TileImage" content="mstile-144x144.png"><meta name="msapplication-square70x70logo" content="mstile-70x70.png"><meta name="msapplication-square150x150logo" content="mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="mstile-310x150.png"><meta name="msapplication-square310x310logo" content="mstile-310x310.png"><link rel="stylesheet" href="/css/prism.css" type="text/css"></head><body itemscope itemtype="https://schema.org/WebPage"><header itemscope itemtype="https://schema.org/WPHeader"><div class="logo"></div><h1><a href="/" alt="Hexo" title="Hexo" itemprop="headline">Hexo</a></h1><p itemprop="description"></p><nav itemscope itemtype="https://schema.org/SiteNavigationElement"><ul><li itemprop="name"><a href="/ " alt="home" title="home" itemprop="url">home</a></li><li itemprop="name"><a href="/articles" alt="articles" title="articles" itemprop="url">articles</a></li><li itemprop="name"><a href="/author" alt="author" title="author" itemprop="url">author</a></li></ul></nav><div class="space"></div></header><main itemscope itemtype="https://schema.org/Blog"><article class="full"><h1 itemprop="headline" class="post-heading">django standalone</h1><span class="post-meta"></span><br><br><pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 피시방 목록 크롤링</span>
+<span class="token keyword">def</span> <span class="token function">get_pcroom_table</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    driver <span class="token operator">=</span> webdriver<span class="token punctuation">.</span>Chrome<span class="token punctuation">(</span><span class="token string">'./chromedriver'</span><span class="token punctuation">)</span>
+    driver<span class="token punctuation">.</span>implicitly_wait<span class="token punctuation">(</span><span class="token number">30</span><span class="token punctuation">)</span>
+    url <span class="token operator">=</span> <span class="token string">"https://benq4ever.blog.me/221196878240"</span>
+    driver<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    driver<span class="token punctuation">.</span>switch_to<span class="token punctuation">.</span>frame<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    driver<span class="token punctuation">.</span>switch_to<span class="token punctuation">.</span>frame<span class="token punctuation">(</span><span class="token string">"mainFrame"</span><span class="token punctuation">)</span>
+    html <span class="token operator">=</span> driver<span class="token punctuation">.</span>page_source
+    soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>html<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+    pcroom_table <span class="token operator">=</span> soup<span class="token punctuation">.</span>select_one<span class="token punctuation">(</span><span class="token string">'div#postViewArea div.view table:nth-of-type(2)'</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> pcroom_table
+</code></pre>
+<p>앞선 포스팅에서 네이버 블로그에 있는 벤큐 피시방 목록을 크롤링 하는데에는 성공했다. 이제 크롤링한 정보를 db에 pcroom모델 객체로 저장해야 된다. pcroom의 모델은 다음과 같다.</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">PCroom</span><span class="token punctuation">(</span>models<span class="token punctuation">.</span>Model<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    createtime_datetime <span class="token operator">=</span> models<span class="token punctuation">.</span>DateTimeField<span class="token punctuation">(</span>auto_now_add<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> blank<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    name_char <span class="token operator">=</span> models<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">)</span>
+    monitor_char <span class="token operator">=</span> models<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">)</span>
+    address_char <span class="token operator">=</span> models<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">40</span><span class="token punctuation">)</span>
+    url_char <span class="token operator">=</span> models<span class="token punctuation">.</span>CharField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">30</span><span class="token punctuation">,</span> blank<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> null<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    longitude_float <span class="token operator">=</span> models<span class="token punctuation">.</span>FloatField<span class="token punctuation">(</span>max_length<span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">,</span> null<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    latitude_float <span class="token operator">=</span> models<span class="token punctuation">.</span>FloatField<span class="token punctuation">(</span>max_length<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">,</span> null<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+</code></pre>
+<p>manage.py shell 에서 하듯이 django orm을 이용해 pcroom 모델을 임의로 생성해보았다.</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># script.py</span>
+<span class="token keyword">from</span> myapp<span class="token punctuation">.</span>models <span class="token keyword">import</span> PCroom
+pcroom <span class="token operator">=</span> PCroom<span class="token punctuation">(</span><span class="token punctuation">)</span>
+pcroom<span class="token punctuation">.</span>name_char <span class="token operator">=</span> <span class="token string">"7 피시방"</span>
+pcroom<span class="token punctuation">.</span>moniter_char <span class="token operator">=</span> <span class="token string">"benq 24인치"</span>
+pcroom<span class="token punctuation">.</span>address_char <span class="token operator">=</span> <span class="token string">"서울시 광진구 아차산로"</span>
+<span class="token comment" spellcheck="true"># ...</span>
+pcroom<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>이제 script.py 를 실행하면 PCroom 객체가 하나 생성되고 db에 저장되야 하지만 </p>
+<pre class=" language-python"><code class="language-python">  File <span class="token string">"/home/mino/PycharmProjects/Benq_PCroom_Finder/venv/lib/python3.7/site-packages/django/conf/__init__.py"</span><span class="token punctuation">,</span> line <span class="token number">42</span><span class="token punctuation">,</span> <span class="token keyword">in</span> _setup
+    <span class="token operator">%</span> <span class="token punctuation">(</span>desc<span class="token punctuation">,</span> ENVIRONMENT_VARIABLE<span class="token punctuation">)</span><span class="token punctuation">)</span>
+django<span class="token punctuation">.</span>core<span class="token punctuation">.</span>exceptions<span class="token punctuation">.</span>ImproperlyConfigured<span class="token punctuation">:</span> Requested setting INSTALLED_APPS<span class="token punctuation">,</span> but settings are <span class="token operator">not</span> configured<span class="token punctuation">.</span> You must either define the environment variable DJANGO_SETTINGS_MODULE <span class="token operator">or</span> call settings<span class="token punctuation">.</span>configure<span class="token punctuation">(</span><span class="token punctuation">)</span> before accessing settings<span class="token punctuation">.</span>
+</code></pre>
+<p>대강 이런 에러가 뜬다. script.py에 장고 환경 변수가 설정이 안되있다는 뜻이다. 이를 해결하기 위해 django standalone이 있다. django standalone은 일반 파이썬 스크립트에서도 ORM 같은 장고 기능을 사용할 수 있게해준다. django standalone을 사용하기 위해서는 파일 상단에 다음 4줄만 추가해 주면 된다.</p>
+<pre class=" language-python"><code class="language-python"><span class="token comment" spellcheck="true"># script.py</span>
+<span class="token keyword">import</span> os
+<span class="token keyword">import</span> django
+os<span class="token punctuation">.</span>environ<span class="token punctuation">.</span>setdefault<span class="token punctuation">(</span><span class="token string">'DJANGO_SETTINGS_MODULE'</span><span class="token punctuation">,</span> <span class="token string">'config.settings'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 프로젝트 폴더에 있는 wsgi.py에서 가져온다.</span>
+django<span class="token punctuation">.</span>setup<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 장고 셋팅값을 불러온다.</span>
+<span class="token keyword">from</span> myapp<span class="token punctuation">.</span>models <span class="token keyword">import</span> PCroom
+pcroom <span class="token operator">=</span> PCroom<span class="token punctuation">(</span><span class="token punctuation">)</span>
+pcroom<span class="token punctuation">.</span>name_char <span class="token operator">=</span> <span class="token string">"7 피시방"</span>
+pcroom<span class="token punctuation">.</span>moniter_char <span class="token operator">=</span> <span class="token string">"benq 24인치"</span>
+pcroom<span class="token punctuation">.</span>address_char <span class="token operator">=</span> <span class="token string">"서울시 광진구 아차산로"</span>
+<span class="token comment" spellcheck="true"># ...</span>
+pcroom<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 성공!</span>
+</code></pre>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">to_location</span><span class="token punctuation">(</span>address<span class="token punctuation">)</span><span class="token punctuation">:</span> <span class="token comment" spellcheck="true"># 네이버 api를 이용해 도로명 주소를 위도 경도로 변환</span>
+    url <span class="token operator">=</span> <span class="token string">"https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="</span><span class="token operator">+</span>address<span class="token operator">+</span><span class="token string">"&amp;coordinate=11,10"</span>
+    custom_headers <span class="token operator">=</span> <span class="token punctuation">{</span>
+        <span class="token string">"X-NCP-APIGW-API-KEY-ID"</span> <span class="token punctuation">:</span> <span class="token string">'YOUR_KEY_ID'</span><span class="token punctuation">,</span>
+        <span class="token string">"X-NCP-APIGW-API-KEY"</span> <span class="token punctuation">:</span> <span class="token string">"YOUR_KEY"</span>
+    <span class="token punctuation">}</span>
+    req<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span> headers<span class="token operator">=</span>custom_headers<span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">(</span>req<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">"addresses"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"x"</span><span class="token punctuation">]</span><span class="token punctuation">,</span> req<span class="token punctuation">.</span>json<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token string">"addresses"</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"y"</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span> <span class="token string">"좌표화 불가."</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">save_pcroom_table</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    pcroom_table <span class="token operator">=</span> get_pcroom_table<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># PC방 목록 불러옴</span>
+    rows <span class="token operator">=</span> pcroom_table<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'tr'</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> row <span class="token keyword">in</span> rows<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        pcroom <span class="token operator">=</span> PCroom<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        cells <span class="token operator">=</span> row<span class="token punctuation">.</span>select<span class="token punctuation">(</span><span class="token string">'td'</span><span class="token punctuation">)</span>
+        pcroom<span class="token punctuation">.</span>name_char <span class="token operator">=</span> cells<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+        pcroom<span class="token punctuation">.</span>monitor_char <span class="token operator">=</span> cells<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+        pcroom<span class="token punctuation">.</span>address_char <span class="token operator">=</span> cells<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+        pcroom<span class="token punctuation">.</span>url_char <span class="token operator">=</span> cells<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">.</span>text
+        location_point <span class="token operator">=</span> to_location<span class="token punctuation">(</span>pcroom<span class="token punctuation">.</span>address_char<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> location_point<span class="token punctuation">:</span>
+            pcroom<span class="token punctuation">.</span>longitude_float <span class="token operator">=</span> location_point<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+            pcroom<span class="token punctuation">.</span>latitude_float <span class="token operator">=</span> location_point<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        pcroom<span class="token punctuation">.</span>save<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># PC방 객체 저장</span>
+</code></pre>
 <p>django standalone을 몰랐을 때는 sqlite db에 직접 접근해서 쿼리문으로 PCroom객체들을 저장했다. 잘 작동했지만 문제가 있었다. 배포할 때는 postgres같은 다른 db를 사용해야 하는데 sqlite 쿼리문으로는 데이터를 저장할 수 없는 것이다. django standalone은 외부 파일에서 ORM말고 다른 장고 기능을 사용할 때에도 요긴하게 쓸 수 있을것 같다. </p>
-
-      </div>
-    </div>
-  </div>
-</div>
-<div class="lx-navigation">
-	<div class="lx-cover prev lx-cover-sm" style="background-image: url(/images/footer_1.jpg)">
-		<div class="overlay"></div>
-		<a class="copy" href="#">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Next</span>
-						<h3>没有更新的文章</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-        <div class="lx-cover next lx-cover-sm" style="background-image: url(/images/footer_2.jpg)">
-		<div class="overlay"></div>
-		<a class="copy" href="/2019/04/26/Crawler-02-Selenium/">
-			<div class="display-t">
-				<div class="display-tc">
-					<div>
-						<span>Prev</span>
-						<h3>Crawler-02-Selenium</h3>
-					</div>
-				</div>
-			</div>
-		</a>
-	</div>
-</div>
-</div>
-
-<footer>
-  <div>
-  Copyright &copy; 2019.<a href="/">Hexo</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.blleng.cn" target="_blank">Lx</a><br>
-  </div>
-</footer>
-</div>
-<button class="menu-trigger"></button>
-  <div class="menu">
-	<div class="menu-head">
-	   <span class="layer">
-	<div class="col">
-	  <div class="row for-pic">
-	   <div class="profile-pic">     
-	   <img src="/images/person_1.jpg" alt="John Doe"> 
-	         </div>
-	  </div>
-	         <div class="row for-name">
-	         <p>John Doe</p>
-	        <span class="tagline">Hello, World!</span>
-	          </div>
-	         </div> 
-	  </span>
-	</div>
-	<nav class="menu-container">
-	<ul class="menu-items">
-	<li><span class="item-icon"><i class="fa fa-home"></i></span> <a href="/">首页</a></li>
-  <li><span class="item-icon"><i class="fa fa-archive"></i></span> <a href="/archives/">归档</a></li> 
-	<li class="has-sub"> <span class="item-icon"> <i class="fa fa-bookmark"></i> </span>
-	<span class="dropdown-heading">页面</span><ul>
-   <li> <a href="/guestbook">留言</a></li><li> <a href="/about">关于</a></li>
-	  </ul>
-	 </li>
-    <li class="has-sub"> <span class="item-icon"> <i class="fa fa-link"></i> </span>
-	 <span class="dropdown-heading">友链</span><ul>
-   <li> <a href="https://lx.blleng.cn" target="_blank">Theme-Lx</a></li>
-	  </ul>
-	 </li>
-	</ul>
-	</nav>
-  </div>
-<div class="gototop js-top">
-  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
-</div>
-
-
-<script src="/js/jquery.easing.min.js"></script>
-<script src="/js/jquery.waypoints.min.js"></script>
-<script src="/js/jquery.stellar.min.js"></script>
-<script src="/js/main.js"></script>
-
-
-</body>
-</html>
+</article><br><br><span class="next-post"><a href="/2019/04/26/Crawler-02-Selenium/" itemprop="url">Older Post ⇒</a></span><br><br><br></main></body></html>
